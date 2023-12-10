@@ -19,3 +19,36 @@
    </div>
    </div>
 </div>
+<script>
+   $(document).ready(function(){
+      $.ajaxSetup({
+         headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+         }
+      });
+      $('#send').on('click', function(e){
+         e.preventDefault();
+
+         const url = $('#link').val();
+
+         if (!url) {
+            alert('Empty URL field!')
+         } else {
+            $.ajax({
+               url: 'send',
+               method: 'POST',
+               data: {url},
+               // dataType: 'JSON',
+               success: function(res) {
+                  alert(999)
+               },
+               error: function (xhr, ajaxOptions, thrownError) {
+                  const jsonResponse = JSON.parse(xhr.responseText);
+
+                  alert(jsonResponse.message);
+               }
+            })
+         }
+      })
+   })
+</script>

@@ -15,3 +15,4 @@ use App\Http\Controllers\SiteController;
 */
 
 Route::get('/', [SiteController::class, 'index']);
+Route::post('send', [SiteController::class, 'send']);

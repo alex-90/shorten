@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SaveURLRequest;
+use App\Models\Link;
+use Helper;
+
 
 class SiteController extends Controller
 {
@@ -60,5 +64,25 @@ class SiteController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function send(SaveURLRequest $request)
+    {
+        $url = $request->input('url');
+        $id = Link::create([
+            'url' => $url,
+            'alias' => '',
+        ])->id;
+
+        $alias = Helper::getAliasbyId($id);
+
+        Link::find($id)->update([
+            'alias' => $alias,
+        ]);
+
+        return response()->json([
+            'id' => $id,
+            'alias' => $alias,
+        ]);
     }
 }
