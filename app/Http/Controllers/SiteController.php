@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SaveURLRequest;
 use App\Models\Link;
 use Helper;
+use Illuminate\Support\Facades\Redirect;
 
 
 class SiteController extends Controller
@@ -88,5 +89,13 @@ class SiteController extends Controller
             'id' => $id,
             'alias' => $alias,
         ]);
+    }
+
+
+    public function redirect($alias)
+    {
+        $url = Link::where('alias', $alias)->firstOrFail()->url;
+
+        return Redirect::away($url, 303);
     }
 }

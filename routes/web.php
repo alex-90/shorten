@@ -16,3 +16,7 @@ use App\Http\Controllers\SiteController;
 
 Route::get('/', [SiteController::class, 'index']);
 Route::post('send', [SiteController::class, 'send']);
+
+Route::get('{alias}', function ($alias) {
+    return (new SiteController)->redirect($alias);
+})->where('alias', '[a-z]{1,3}');

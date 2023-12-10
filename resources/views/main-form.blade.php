@@ -7,7 +7,7 @@
          <ul id="last-items">
             @foreach($last as $item)
             <li>
-               <a href="{{ Request::url() . '/' . $item->alias }}">{{ Request::url() . '/' . $item->alias }}</a>
+               <a href="{{ Request::url() . '/' . $item->alias }}" target="_blank">{{ Request::url() . '/' . $item->alias }}</a>
             </li>
             @endforeach
          </ul>
