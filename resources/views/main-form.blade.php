@@ -7,7 +7,7 @@
          <ul id="last-items">
             @foreach($last as $item)
             <li>
-               <a href="{{ Request::url() . '/' . $item->alias }}" target="_blank">{{ Request::url() . '/' . $item->alias }}</a>
+               <a data-id="{{ $item->id }}" href="{{ Request::url() . '/' . $item->alias }}" target="_blank">{{ Request::url() . '/' . $item->alias }}</a>
             </li>
             @endforeach
          </ul>
@@ -50,9 +50,24 @@
 
                   $.ajax({
                      success: function(html) {
+
                         $('#last-items').html(
                            $(html).find('#last-items').html()
                         );
+
+                        let i=0;
+                        const interval = window.setInterval(function(){
+
+                           const color = i++ % 2 == 0 ? 'red' : 'black';
+
+                           $('#last-items [data-id=' + id + ']').css({
+                              color
+                           })
+
+                           if (i == 6) {
+                              clearInterval(interval);
+                           }
+                        }, 1000);
                      }
                   })
 
