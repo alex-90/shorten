@@ -15,7 +15,11 @@ class SiteController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $last = Link::where('alias', '<>', '')->latest()->take(10)->get();
+
+        return view('index', [
+            'last' => $last,
+        ]);
     }
 
     /**

@@ -4,7 +4,13 @@
       <h1 class="display-4 fw-bold lh-1 mb-3">Paste URL and get short link</h1>
       <p class="col-lg-10 fs-4">Recently added</p>
       <div>
-         <ul id="last-items"></ul>
+         <ul id="last-items">
+            @foreach($last as $item)
+            <li>
+               <a href="{{ Request::url() . '/' . $item->alias }}">{{ Request::url() . '/' . $item->alias }}</a>
+            </li>
+            @endforeach
+         </ul>
       </div>
    </div>
    <div class="col-md-10 mx-auto col-lg-5">
@@ -38,9 +44,19 @@
                url: 'send',
                method: 'POST',
                data: {url},
-               // dataType: 'JSON',
+               dataType: 'JSON',
                success: function(res) {
-                  alert(999)
+                  const { id, alias } = res;
+
+                  $.ajax({
+                     success: function(html) {
+                        $('#last-items').html(
+                           $(html).find('#last-items').html()
+                        );
+                     }
+                  })
+
+                  $('#link').val('');
                },
                error: function (xhr, ajaxOptions, thrownError) {
                   const jsonResponse = JSON.parse(xhr.responseText);
