@@ -9,7 +9,7 @@ class Helper
         $id--;
 		$s1 = $s2 = $s3 = 0;
 
-        if (0 < $id && $id < 26) {
+        if (0 <= $id && $id < 26) {
             $s1 = $id + 1;
         } elseif (26 <= $id && $id < 26*26 + 26) {
             $id -= 26;
